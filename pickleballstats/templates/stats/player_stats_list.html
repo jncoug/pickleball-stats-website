@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PickleballStats</title>
+  </head>
+  <body>
+    <h1>Player Stats</h1>
+
+    <h2>Highest Serve Winner Percentage</h2>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Serve Win Pct.</th>
+          <th>Serves</th>
+          <th>Serve Winners</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        {% for player_stat in player_stats_list %}
+        <tr>
+          <td>
+            {{ player_stat.player.f_name }} {{ player_stat.player.l_name }}
+          </td>
+          <td>{{ player_stat.serve_winner_pct }} %</td>
+          <td>{{ player_stat.serves }}</td>
+          <td>{{ player_stat.serve_winners }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </body>
+</html>
