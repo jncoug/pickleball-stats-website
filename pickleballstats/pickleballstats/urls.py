@@ -20,5 +20,5 @@ from MyApp import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('player_stats/ordered_by_serve_winner_pct/', views.get_stats_by_serve_winner_percentage, name= 'player_stats_list')
+    path('player_stats/ordered_by_serve_winner_pct/', views.get_stats_by_serve_winner_percentage, name = 'player_stats_list')
 ]
