@@ -176,6 +176,18 @@ class PlayerStats(models.Model):
         null=True,
         related_name="partner_for_player",
     )
+    opponent1 = models.ForeignKey(
+        Player,
+        on_delete=models.DO_NOTHING,
+        related_name="opponent1",
+    )
+    opponent2 = models.ForeignKey(
+        Player,
+        on_delete=models.DO_NOTHING,
+        blank=True,
+        null=True,
+        related_name="opponent2_optional",
+    )
     match = models.ForeignKey(Match, on_delete=models.CASCADE)
 
     # General statistics
