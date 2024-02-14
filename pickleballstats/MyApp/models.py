@@ -126,11 +126,11 @@ class Match(models.Model):
             team_count = len(self_with_teams.teams.all())
             if team_count == 2:
                 # It's a doubles match
-                team_names = "and ".join([str(team) for team in self.teams.all()])
+                team_names = " and ".join([str(team) for team in self.teams.all()])
                 return f"{self.round} {self.get_bracket_display()} match between teams {team_names} - {str(self.tournament)}"
             elif player_count == 2:
                 # It's a singles match
-                player_names = "and ".join(
+                player_names = " and ".join(
                     [str(player) for player in self.players.all()]
                 )
                 return f"{self.round} {self.get_bracket_display()} match between {player_names} - {str(self.tournament)}"
@@ -166,7 +166,16 @@ class Match(models.Model):
 
 
 class PlayerStats(models.Model):
-    player = models.ForeignKey(Player, on_delete=models.CASCADE)
+    player = models.ForeignKey(
+        Player, on_delete=models.CASCADE, related_name="player_with_stats"
+    )
+    partner = models.ForeignKey(
+        Player,
+        on_delete=models.DO_NOTHING,
+        blank=True,
+        null=True,
+        related_name="partner_for_player",
+    )
     match = models.ForeignKey(Match, on_delete=models.CASCADE)
 
     # General statistics
