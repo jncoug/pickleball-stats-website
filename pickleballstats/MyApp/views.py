@@ -4,6 +4,8 @@ from .models import PlayerStats
 
 
 # Create your views here.
+
+# order players by serve winner percentage
 def get_stats_by_serve_winner_percentage(request):
     player_stats = PlayerStats \
         .objects \
