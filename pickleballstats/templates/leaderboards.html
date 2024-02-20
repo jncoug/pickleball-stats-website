@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Stat Leaders</title>
+  </head>
+  <body>
+    <h1>Stat Leaders</h1>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Player</th>
+          <th>Mtchs</th>
+          <th>Rlys</th>
+          <th>Rly Win %</th>
+          <th>Pnts</th>
+          <th>Srvs</th>
+          <th>Ace %</th>
+          <th>Srv Mss %</th>
+          <th>Rtrns</th>
+          <th>Rtrn Wnr %</th>
+          <th>Rtrn Mss %</th>
+          <th>Thrds</th>
+          <th>Thrd Drv %</th>
+          <th>Thrd Drp %</th>
+          <th>Thrd Drp Mk %</th>
+          <th>Thrd Drp Mss %</th>
+          <th>Total Drvs</th>
+          <th>Drv Wnr %</th>
+          <th>Drv Lsr %</th>
+          <th>Drv Mss %</th>
+          <th>Dnk Mss</th>
+          <th>Dnk Wnr</th>
+          <th>Vlly SpdUp</th>
+          <th>VSpU Wnr %</th>
+          <th>VSpU Lsr %</th>
+          <th>VSpU Mss %</th>
+          <th>Off-Bnce SpdUp</th>
+          <th>BSpU Wnr %</th>
+          <th>BSpU Lsr %</th>
+          <th>BSpU Mss %</th>
+          <th>Cntrs</th>
+          <th>Cntr Wnr %</th>
+          <th>Cntr Lsr %</th>
+          <th>Cntr Mss %</th>
+          <th>Resets</th>
+          <th>Rst Mk %</th>
+          <th>Rst Mss %</th>
+          <th>Lobs</th>
+          <th>Lb Mk %</th>
+          <th>Lb Mss %</th>
+          <th>Lb Wnr %</th>
+          <th>Lb Lsr %</th>
+          <th>Popups</th>
+          <th>Ppp Lsr %</th>
+          <th>Ptwy Atmps</th>
+          <th>Ptwy Wnr %</th>
+          <th>Ptwy Mss %</th>
+          <th>Ernes</th>
+          <th>Ern Wnr %</th>
+          <th>Ern Mss %</th>
+          <th>Atps</th>
+          <th>Atp Wnr %</th>
+          <th>Atp Mss %</th>
+          <th>NVZ Flts</th>
+          <th>Srv Flts</th>
+          <th>Tch Wrngs %</th>
+        </tr>
+      </thead>
+      <tbody>
+        
+        {% for stat in aggregated_stats %}
+        <tr>
+          <td>{{ stat.player.f_name }} {{ stat.player.l_name }}</td>
+          <td>{{ stat.total_points }}</td>
+          <td>{{ stat.rallies_played }}</td>
+          <td>{{ stat.rallies_won }}</td>
+          <td>{{ stat.rallies_played }}</td>
+          <td>{{ stat.rally_win_percentage }}</td>
+          <td>{{ stat.total_points_won }}</td>
+          <td>{{ stat.total_serves }}</td>
+          <td>{{ stat.serve_win_percentage }}</td>
+          <td>{{ stat.serve_miss_percentage }}</td>
+          <td>{{ stat.total_returns }}</td>
+          <td>{{ stat.return_win_percentage }}</td>
+          <td>{{ stat.return_miss_percentage }}</td>
+          <td>{{ stat.total_thirds }}</td>
+          <td>{{ stat.third_drive_percentage }}</td>
+          <td>{{ stat.third_drop_make_percentage }}</td>
+          <td>{{ stat.stat.third_drop_miss_percentage }}</td>
+          <td>{{ stat.total_drives }}</td>
+          <td>{{ stat.drive_win_percentage }}</td>
+          <td>{{ stat.drive_loss_percentage }}</td>
+          <td>{{ stat.drive_miss_percentage }}</td>
+          <td>{{ stat.total_dink_misses }}</td>
+          <td>{{ stat.total_dink_winners }}</td>
+          <td>{{ stat.total_volley_speed_ups }}</td>
+          <td>{{ stat.volley_speed_up_win_percentage }}</td>
+          <td>{{ stat.volley_speed_up_loss_percentage }}</td>
+          <td>{{ stat.volley_speed_up_miss_percentage }}</td>
+          <td>{{ stat.total_volley_speed_ups }}</td>
+          <td>{{ stat.volley_speed_up_win_percentage }}</td>
+          <td>{{ stat.volley_speed_up_loss_percentage }}</td>
+          <td>{{ stat.volley_speed_up_miss_percentage }}</td>
+          <td>{{ stat.rallies_played }}</td>
+          <td>{{ stat.rallies_played }}</td>
+          <td>{{ stat.rallies_played }}</td>
+          <td>{{ stat.rallies_played }}</td>
+          <td>{{ stat.rallies_played }}</td>
+          <td>{{ stat.rallies_played }}</td>
+          <td>{{ stat.rallies_played }}</td>
+          <td>{{ stat.rallies_played }}</td>
+          <td>{{ stat.rallies_played }}</td>
+          <td>{{ stat.rallies_played }}</td>
+          <td>{{ stat.rallies_played }}</td>
+          <td>{{ stat.rallies_played }}</td>
+          <td>{{ stat.rallies_played }}</td>
+          <td>{{ stat.rallies_played }}</td>
+          <td>{{ stat.rallies_played }}</td>
+          <td>{{ stat.rallies_played }}</td>
+          <td>{{ stat.rallies_played }}</td>
+          <td>{{ stat.rallies_played }}</td>
+          <td>{{ stat.rallies_played }}</td>
+          <td>{{ stat.rallies_played }}</td>
+          <td>{{ stat.rallies_played }}</td>
+          <td>{{ stat.rallies_played }}</td>
+          <td>{{ stat.rallies_played }}</td>
+          <td>{{ stat.rallies_played }}</td>
+          <td>{{ stat.rallies_played }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </body>
+</html>

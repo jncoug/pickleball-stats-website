@@ -20,10 +20,13 @@ from django.urls import path
 from MyApp import views
 
 urlpatterns = [
+    path("", views.home_page, name="index"),
     path("admin/", admin.site.urls),
     path(
         "player_stats/ordered_by_serve_winner_pct/",
         views.get_stats_by_serve_winner_percentage,
         name="player_stats_list",
     ),
+    path("players", views.player_page_stats, name="players"),
+    path("leaderboards", views.leaderboards, name="leaderboards"),
 ]

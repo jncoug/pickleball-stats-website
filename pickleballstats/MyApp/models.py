@@ -27,6 +27,9 @@ class Player(models.Model):
     l_name = models.CharField(max_length=100)
     birthdate = models.DateField()
     sex = models.CharField(max_length=1, choices=[("M", "Male"), ("F", "Female")])
+    hand = models.CharField(max_length=1, choices=[("R", "Right"), ("L", "Left")])
+    turned_pro = models.CharField(max_length=4)
+    sponsor = models.CharField(max_length=100)
     bracket = models.CharField(
         max_length=2,
         choices=[("MS", "Mens Singles"), ("WS", "Women's Singles")],
@@ -36,41 +39,6 @@ class Player(models.Model):
         return f"{self.f_name} {self.l_name}"
 
 
-class Team(models.Model):
-    player1 = models.ForeignKey(
-        Player, on_delete=models.CASCADE, related_name="player1_team"
-    )
-    player2 = models.ForeignKey(
-        Player, on_delete=models.CASCADE, related_name="player2_team"
-    )
-    bracket = models.CharField(
-        max_length=3,
-        choices=[
-            ("MD", "Men's Doubles"),
-            ("MXD", "Mixed Doubles"),
-            ("WD", "Women's Doubles"),
-        ],
-    )
-
-    def __str__(self):
-        return f"{str(self.player1)} & {str(self.player2)} - ({self.bracket})"
-
-    def clean(self):
-        super().clean()
-        self.validate_team_composition()
-
-    def validate_team_composition(self):
-        # Custom validation logic for team composition
-        if self.player1.sex == "M" and self.player2.sex == "F":
-            if self.bracket not in ["MXD", "WD"]:
-                raise ValidationError("Invalid bracket for this team composition.")
-        elif self.player1.sex == "F" and self.player2.sex == "M":
-            if self.bracket not in ["MXD", "MD"]:
-                raise ValidationError("Invalid bracket for this team composition.")
-        else:
-            raise ValidationError("Invalid combination of player sexes for a team.")
-
-
 class Match(models.Model):
     class GameCount(models.IntegerChoices):
         ONE = 1, "Best of 1"
@@ -78,7 +46,7 @@ class Match(models.Model):
         FIVE = 5, "Best of 5"
 
     tournament = models.ForeignKey(Tournament, on_delete=models.CASCADE)
-    match_date = models.DateTimeField()
+    date = models.DateField()
     bracket = models.CharField(
         max_length=3,
         choices=[
@@ -103,7 +71,6 @@ class Match(models.Model):
         ],
     )
     players = models.ManyToManyField(Player, blank=True)
-    teams = models.ManyToManyField(Team, blank=True)
     game_count = models.IntegerField(choices=GameCount.choices)
     scoring_type = models.CharField(
         max_length=8,
@@ -122,18 +89,11 @@ class Match(models.Model):
                 pk=self.pk
             )
             player_count = len(self_with_players.players.all())
-            self_with_teams = Match.objects.prefetch_related("teams").get(pk=self.pk)
-            team_count = len(self_with_teams.teams.all())
-            if team_count == 2:
-                # It's a doubles match
-                team_names = " and ".join([str(team) for team in self.teams.all()])
-                return f"{self.round} {self.get_bracket_display()} match between teams {team_names} - {str(self.tournament)}"
-            elif player_count == 2:
+
+            if player_count >= 2:
                 # It's a singles match
-                player_names = " and ".join(
-                    [str(player) for player in self.players.all()]
-                )
-                return f"{self.round} {self.get_bracket_display()} match between {player_names} - {str(self.tournament)}"
+                player_names = ", ".join([str(player) for player in self.players.all()])
+                return f"{self.round} {self.get_bracket_display()} match - {str(self.tournament)}"
 
         else:
             # Handle other cases or customize as needed
@@ -141,21 +101,7 @@ class Match(models.Model):
 
     def clean(self):
         super().clean()
-
-        # pdb.set_trace()
-        # if self.teams.count() == 2 and self.players.count() == 0:
-        #     self.validate_teams_by_bracket()
-        # elif self.players.count() == 2 and self.teams.count() == 0:
-        #     self.validate_players_by_bracket()
-        # else:
-        #     raise ValidationError("You cannot have teams and players selected")
-
-    def validate_teams_by_bracket(self):
-        for team in self.teams.all():
-            if team.bracket != self.bracket:
-                raise ValidationError(
-                    f"Invalid team. Expected {self.bracket} team, got {team.bracket} team."
-                )
+        # self.validate_players_by_bracket
 
     def validate_players_by_bracket(self):
         for player in self.players.all():
@@ -211,12 +157,26 @@ class PlayerStats(models.Model):
     return_neutrals = models.IntegerField(default=0)
     return_misses = models.IntegerField(default=0)
 
+    # 3rd shots
+    thirds = models.IntegerField(default=0)
+    third_drops = models.IntegerField(default=0)
+    third_drives = models.IntegerField(default=0)
+
+    # drops
+    third_drop_makes = models.IntegerField(default=0)
+    third_drop_winners = models.IntegerField(default=0)
+    third_drop_misses = models.IntegerField(default=0)
+
     # drives - a drive attack from behind 50% of the court - typically on a 3rd shot
     drives = models.IntegerField(default=0)
     drive_winners = models.IntegerField(default=0)
     drive_losers = models.IntegerField(default=0)
     drive_neutrals = models.IntegerField(default=0)
     drive_misses = models.IntegerField(default=0)
+
+    # dinks
+    dink_winners = models.IntegerField(default=0)
+    dink_misses = models.IntegerField(default=0)
 
     # volley speed ups - attacking a neutral ball with a volley
     volley_speed_ups = models.IntegerField(default=0)
@@ -241,9 +201,12 @@ class PlayerStats(models.Model):
 
     # the direct and immediate neutralization of a speed up or put away
     resets = models.IntegerField(default=0)
+    resets_made = models.IntegerField(default=0)
+    resets_missed = models.IntegerField(default=0)
 
     # lobs
     lobs = models.IntegerField(default=0)
+    lob_successes = models.IntegerField(default=0)
     lob_winners = models.IntegerField(default=0)
     lob_losers = models.IntegerField(default=0)
     lob_neutrals = models.IntegerField(default=0)
@@ -261,22 +224,30 @@ class PlayerStats(models.Model):
     # putaway attempts
     putaway_attempts = models.IntegerField(default=0)
     putaway_winners = models.IntegerField(default=0)
-    putaway_losers = models.IntegerField(default=0)
+    # no losers that doesn't make sense putaway_losers = models.IntegerField(default=0)
     putaway_neutrals = models.IntegerField(default=0)
     putaway_misses = models.IntegerField(default=0)
 
-    # Other specific stats
+    # ernes and atps
+    ernes = models.IntegerField(default=0)
+    erne_winners = models.IntegerField(default=0)
+    erne_neutrals = models.IntegerField(default=0)
+    erne_misses = models.IntegerField(default=0)
+    erne_losers = models.IntegerField(default=0)
 
-    # dinks
-    dink_winners = models.IntegerField(default=0)
-    dink_misses = models.IntegerField(default=0)
-    # drops
-    drop_winners = models.IntegerField(default=0)
-    drop_misses = models.IntegerField(default=0)
+    atps = models.IntegerField(default=0)
+    atp_winners = models.IntegerField(default=0)
+    atp_neutrals = models.IntegerField(default=0)
+    atp_misses = models.IntegerField(default=0)
+    atp_losers = models.IntegerField(default=0)
+
     # other
     nvz_faults = models.IntegerField(default=0)
     service_faults = models.IntegerField(default=0)
     technical_warnings = models.IntegerField(default=0)
 
     def __str__(self):
-        return f"{str(self.match)} - {str(self.player)} stats "
+        if self.opponent2:
+            return f"{str(self.player)} stats vs {str(self.opponent1)}/{str(self.opponent2)} - {str(self.match)} "
+        else:
+            return f"{str(self.player)} stats vs {str(self.opponent1)} - {str(self.match)} "

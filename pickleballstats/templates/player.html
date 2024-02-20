@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+      crossorigin="anonymous"
+    />
+    <title>{{ player.f_name }} {{ player.l_name }}</title>
+  </head>
+  <body>
+    <header></header>
+    <main>
+      <h1 style="display: flex; align-content: center; justify-content: center;">{{ player.f_name }} {{ player.l_name }}</h1>
+      
+      <table class="table table-striped table-bordered">
+        <thead>
+            <tr>
+                <th>Age</th>
+                <th>Hand</th>
+                <th>Sponsor</th>
+                <th>Turned Pro</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>{{ age }}</td>
+                <td>{{ player.hand }}</td>
+                <td>{{ player.sponsor }}</td>
+                <td>{{ player.turned_pro }}</td>
+            </tr>
+        </tbody>
+      </table>
+
+      <div style="overflow-x: auto;">
+      <table class="table table-striped table-bordered">
+        <thead>
+          <tr>
+            <th>Mtchs</th>
+            <th>Rlys</th>
+            <th>Rly Win %</th>
+            <th>Pnts</th>
+            <th>Srvs</th>
+            <th>Ace %</th>
+            <th>Srv Mss %</th>
+            <th>Rtrns</th>
+            <th>Rtrn Wnr %</th>
+            <th>Rtrn Mss %</th>
+            <th>Thrds</th>
+            <th>Thrd Drv %</th>
+            <th>Thrd Drp %</th>
+            <th>Thrd Drp Mk %</th>
+            <th>Thrd Drp Mss %</th>
+            <th>Total Drvs</th>
+            <th>Drv Wnr %</th>
+            <th>Drv Lsr %</th>
+            <th>Drv Mss %</th>
+            <th>Dnk Mss</th>
+            <th>Dnk Wnr</th>
+            <th>Vlly SpdUp</th>
+            <th>VSpU Wnr %</th>
+            <th>VSpU Lsr %</th>
+            <th>VSpU Mss %</th>
+            <th>Off-Bnce SpdUp</th>
+            <th>BSpU Wnr %</th>
+            <th>BSpU Lsr %</th>
+            <th>BSpU Mss %</th>
+            <th>Cntrs</th>
+            <th>Cntr Wnr %</th>
+            <th>Cntr Lsr %</th>
+            <th>Cntr Mss %</th>
+            <th>Resets</th>
+            <th>Rst Mk %</th>
+            <th>Rst Mss %</th>
+            <th>Lobs</th>
+            <th>Lb Mk %</th>
+            <th>Lb Mss %</th>
+            <th>Lb Wnr %</th>
+            <th>Lb Lsr %</th>
+            <th>Popups</th>
+            <th>Ppp Lsr %</th>
+            <th>Ptwy Atmps</th>
+            <th>Ptwy Wnr %</th>
+            <th>Ptwy Mss %</th>
+            <th>Ernes</th>
+            <th>Ern Wnr %</th>
+            <th>Ern Mss %</th>
+            <th>Atps</th>
+            <th>Atp Wnr %</th>
+            <th>Atp Mss %</th>
+            <th>NVZ Flts</th>
+            <th>Srv Flts</th>
+            <th>Tch Wrngs %</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>{{ stats.total_matches }}</td>
+            <td>{{ stats.total_rallies_played }}</td>
+            <td>{{ stats.rally_win_percentage }}%</td>
+            <td>{{ stats.total_points_won }}</td>
+            <td>{{ stats.total_serves }}</td>
+            <td>{{ stats.serve_win_percentage }}%</td>
+            <td>{{ stats.serve_miss_percentage }}%</td>
+            <td>{{ stats.total_returns }}</td>
+            <td>{{ stats.return_win_percentage }}%</td>
+            <td>{{ stats.return_miss_percentage }}%</td>
+            <td>{{ stats.total_thirds }}</td>
+            <td>{{ stats.third_drive_percentage }}%</td>
+            <td>{{ stats.third_drop_percentage }}%</td>
+            <td>{{ stats.third_drop_make_percentage }}%</td>
+            <td>{{ stats.third_drop_miss_percentage }}%</td>
+            <td>{{ stats.total_drives }}</td>
+            <td>{{ stats.drive_win_percentage }}%</td>
+            <td>{{ stats.drive_loss_percentage }}%</td>
+            <td>{{ stats.drive_miss_percentage }}%</td>
+            <td>{{ stats.total_dink_misses }}</td>
+            <td>{{ stats.total_dink_winners }}</td>
+            <td>{{ stats.total_volley_speed_ups }}</td>
+            <td>{{ stats.volley_speed_up_win_percentage }}%</td>
+            <td>{{ stats.volley_speed_up_loss_percentage }}%</td>
+            <td>{{ stats.volley_speed_up_miss_percentage }}%</td>
+            <td>{{ stats.total_volley_speed_ups }}</td>
+            <td>{{ stats.off_bounce_speed_up_win_percentage }}%</td>
+            <td>{{ stats.off_bounce_speed_up_loss_percentage }}%</td>
+            <td>{{ stats.off_bounce_speed_up_miss_percentage }}%</td>
+            <td>{{ stats.total_counters }}</td>
+            <td>{{ stats.counter_win_percentage }}%</td>
+            <td>{{ stats.counter_loss_percentage }}%</td>
+            <td>{{ stats.counter_miss_percentage }}%</td>
+            <td>{{ stats.total_resets }}</td>
+            <td>{{ stats.reset_made_percentage }}%</td>
+            <td>{{ stats.reset_miss_percentage }}%</td>
+            <td>{{ stats.total_lobs }}</td>
+            <td>{{ stats.lob_made_percentage }}%</td>
+            <td>{{ stats.lob_miss_percentage }}%</td>
+            <td>{{ stats.lob_win_percentage }}%</td>
+            <td>{{ stats.lob_lose_percentage }}%</td>
+            <td>{{ stats.total_popups }}</td>
+            <td>{{ stats.popup_lose_percentage }}%</td>
+            <td>{{ stats.total_putaways }}</td>
+            <td>{{ stats.putway_win_percentage }}%</td>
+            <td>{{ stats.putway_miss_percentage }}%</td>
+            <td>{{ stats.total_ernes }}</td>
+            <td>{{ stats.erne_win_percentage }}%</td>
+            <td>{{ stats.erne_miss_percentage }}%</td>
+            <td>{{ stats.total_atps }}</td>
+            <td>{{ stats.atp_win_percentage }}%</td>
+            <td>{{ stats.atp_miss_percentage }}%</td>
+            <td>{{ stats.total_nvz_faults }}</td>
+            <td>{{ stats.total_service_faults }}</td>
+            <td>{{ stats.total_technical_warnings }}</td>
+          </tr>
+        </tbody>
+      </table>
+      <div style="overflow-x: auto;"></div>
+    </main>
+    <footer>
+        <div class="footer">
+            <!-- <div class=>
+                <a href="../players?q={{ prev.id }}">{{ prev.f_name }} {{ prev.l_name }}</a>
+            </div>
+            <div id="next">
+                <a href="../players?q={{ next.id }}">{{ next.f_name }} {{ next.l_name }}</a>
+            </div> -->
+        </div>
+    </footer>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  </body>
+</html>

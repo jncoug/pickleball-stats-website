@@ -12,5 +12,4 @@ class MatchAdmin(admin.ModelAdmin):
 admin.site.register(Tournament)
 admin.site.register(Player)
 admin.site.register(Match, MatchAdmin)
-admin.site.register(Team)
 admin.site.register(PlayerStats)
