@@ -68,17 +68,16 @@
       <div id="player-search-app"></div>
     </main>
     <footer></footer>
-    <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
+
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
 
     <script type="text/x-template" id="player-search-template">
+      {% verbatim %}
       <div class="search-container">
           <div>
           <input type="text" placeholder="Search for Player" v-model="searchQuery" />
           <ul v-if="filteredPlayers.length > 0">
             <li v-for="player in filteredPlayers" :key="player.id" @click="selectPlayer(player)">
-              <script> // Injecting the console.log here
-                console.log("Player is here");
-              </script>
               {{ player.name }}
             </li>
           </ul>
@@ -91,6 +90,7 @@
             <p>Serve Win Percentage: {{ serveWinPercentage }}%</p>
           </div>
       </div>
+      {% endverbatim %}
     </script>
     <script>
       // JavaScript from your player_search.vue file (without the <template> and <style>)
@@ -148,7 +148,6 @@
                 totalServes: 215,
                 serveWins: 10,
               },
-              // ... More players...
             ],
             selectedPlayer: null,
             searchQuery: "",
