@@ -5,7 +5,46 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>PickleballStats</title>
     <style>
+      body {
+        font-family: Arial, sans-serif; /* Or your preferred font */
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+      }
+      main {
+        display: flex; /* Enable Flexbox layout */
+        flex-direction: column; /* Stack items vertically */
+        align-items: center; /* Horizontally center content */
+        justify-content: space-around; /* Distribute space around content */
+        margin: 30px auto; /* Spacing above/below & centering */
+      }
+      header,
+      footer {
+        background-color: #f0f0f0;
+        text-align: center;
+        padding: 15px 0;
+      }
+      footer {
+        position: fixed; /* Change from its regular positioning */
+        bottom: 0;
+        width: 100%; /* Ensure it spans the entire width */
+      }
+      #player-search-app {
+        display: flex;
+        flex-direction: column; /* Arrange elements vertically */
+        align-items: center; /* Horizontal Centering */
+        margin: 0; /* Reset default margins */
+        padding: 20px; /* Add some breathing room */
+      }
       /* Search Input Area */
+      .search-container {
+        display: flex; /* Make search box and results flexible */
+        flex-direction: column; /* Stack them vertically */
+        width: 100%; /* Take full width */
+        max-width: 500px; /* Limit max width on desktops */
+        margin-bottom: 20px; /* Add spacing below */
+      }
       .search-container input {
         padding: 8px 12px;
         border: 1px solid #ccc;
@@ -67,12 +106,13 @@
       <p>See player serve stats in the Vue Dropdown Sample</p>
       <div id="player-search-app"></div>
     </main>
-    <footer></footer>
+    <footer>&copy; Joseph Harris - 2024</footer>
 
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
 
     <script type="text/x-template" id="player-search-template">
       {% verbatim %}
+
       <div class="search-container">
           <div>
           <input type="text" placeholder="Search for Player" v-model="searchQuery" />
@@ -90,6 +130,7 @@
             <p>Serve Win Percentage: {{ serveWinPercentage }}%</p>
           </div>
       </div>
+
       {% endverbatim %}
     </script>
     <script>
