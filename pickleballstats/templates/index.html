@@ -37,6 +37,9 @@
         margin: 0; /* Reset default margins */
         padding: 20px; /* Add some breathing room */
       }
+      .highlight {
+        font-weight: bold;
+      }
       /* Search Input Area */
       .search-container {
         display: flex; /* Make search box and results flexible */
@@ -117,6 +120,9 @@
           <div>
           <input type="text" placeholder="Search for Player" v-model="searchQuery" />
           <ul v-if="filteredPlayers.length > 0">
+            <!-- <li v-for="player in filteredPlayers" :key="player.id" @click="selectPlayer(player)">
+              {{ player.name }}
+            </li> -->
             <li v-for="player in filteredPlayers" :key="player.id" @click="selectPlayer(player)">
               {{ player.name }}
             </li>
