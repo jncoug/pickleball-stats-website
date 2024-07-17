@@ -120,9 +120,6 @@
           <div>
           <input type="text" placeholder="Search for Player" v-model="searchQuery" />
           <ul v-if="filteredPlayers.length > 0">
-            <!-- <li v-for="player in filteredPlayers" :key="player.id" @click="selectPlayer(player)">
-              {{ player.name }}
-            </li> -->
             <li v-for="player in filteredPlayers" :key="player.id" @click="selectPlayer(player)">
               {{ player.name }}
             </li>
